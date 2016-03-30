@@ -1,4 +1,4 @@
-System.register(["angular2/platform/browser", "angular2/core"], function(exports_1) {
+System.register(['angular2/core', 'angular2/common', "angular2/platform/browser"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,31 +8,38 @@ System.register(["angular2/platform/browser", "angular2/core"], function(exports
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var browser_1, core_1;
-    var HelloWorld;
+    var core_1, common_1, browser_1;
+    var DemoFormSKU;
     return {
         setters:[
-            function (browser_1_1) {
-                browser_1 = browser_1_1;
-            },
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
+            },
+            function (browser_1_1) {
+                browser_1 = browser_1_1;
             }],
         execute: function() {
-            HelloWorld = (function () {
-                function HelloWorld() {
-                    this.names = ['Desmond', 'Munashe', 'Denford', 'Tinashe'];
+            DemoFormSKU = (function () {
+                function DemoFormSKU() {
                 }
-                HelloWorld = __decorate([
+                DemoFormSKU.prototype.onSubmit = function (form) {
+                    console.log('you submitted value:', form);
+                };
+                DemoFormSKU = __decorate([
                     core_1.Component({
-                        selector: 'hello-world',
-                        template: "\n    <div>\n       <ul *ngIf=\"names\">\n        <li *ngFor=\"#name of names\">\n            Name: {{name}}\n            <div ngNonBindable>\n                Non-Bindable Name: {{name}}\n            </div>\n        </li>\n       </ul>\n    </div>\n\n    "
+                        selector: 'demo-form-sku',
+                        directives: [common_1.FORM_DIRECTIVES],
+                        template: "\n    <div class=\"ui raised segment\">\n        <h2 class=\"ui header\">Demo Form: SKU</h2>\n        <form #f=\"ngForm\"\n            (ngSubmit)=\"onSubmit(f.value)\"\n            class=\"ui form\">\n\n        <div class=\"field\">\n            <label for=\"skuInput\">SKU</label>\n            <input type=\"text\"\n                id=\"skuInput\"\n                placeholder=\"SKU\"\n                ngControl=\"sku\">\n        </div>\n\n        <button type=\"submit\" class=\"ui button\">Submit</button>\n        </form>\n    </div>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
-                ], HelloWorld);
-                return HelloWorld;
+                ], DemoFormSKU);
+                return DemoFormSKU;
             })();
-            browser_1.bootstrap(HelloWorld);
+            exports_1("DemoFormSKU", DemoFormSKU);
+            browser_1.bootstrap(DemoFormSKU);
         }
     }
 });

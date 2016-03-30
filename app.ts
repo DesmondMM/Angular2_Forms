@@ -1,5 +1,6 @@
 import {Component} from 'angular2/core';
 import {FORM_DIRECTIVES} from 'angular2/common';
+import { bootstrap } from "angular2/platform/browser";
 
 @Component({
     selector: 'demo-form-sku',
@@ -14,9 +15,9 @@ import {FORM_DIRECTIVES} from 'angular2/common';
         <div class="field">
             <label for="skuInput">SKU</label>
             <input type="text"
-                id="skuinput"
+                id="skuInput"
                 placeholder="SKU"
-                ngControl="sku"
+                ngControl="sku">
         </div>
 
         <button type="submit" class="ui button">Submit</button>
@@ -24,3 +25,10 @@ import {FORM_DIRECTIVES} from 'angular2/common';
     </div>
     `
 })
+export class DemoFormSKU {
+    onSubmit(form: any): void {
+        console.log('you submitted value:', form);
+    }
+}
+
+bootstrap(DemoFormSKU);
