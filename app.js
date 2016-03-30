@@ -9,7 +9,7 @@ System.register(['angular2/core', 'angular2/common', "angular2/platform/browser"
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, common_1, browser_1;
-    var DemoFormSKUBuilder;
+    var DemoFormBuilder;
     function skuValidator(control) {
         if (!control.value.match(/^123/)) {
             return { invalidSku: true };
@@ -27,35 +27,27 @@ System.register(['angular2/core', 'angular2/common', "angular2/platform/browser"
                 browser_1 = browser_1_1;
             }],
         execute: function() {
-            DemoFormSKUBuilder = (function () {
-                function DemoFormSKUBuilder(fb) {
+            DemoFormBuilder = (function () {
+                function DemoFormBuilder(fb) {
                     this.myForm = fb.group({
-                        'sku': ['', common_1.Validators.compose([
-                                common_1.Validators.required, skuValidator])]
-                    });
-                    this.sku = this.myForm.controls['sku'];
-                    this.sku.valueChanges.subscribe(function (value) {
-                        console.log('sku changed to: ', value);
-                    });
-                    this.myForm.valueChanges.subscribe(function (form) {
-                        console.log('form changed to: ', form);
+                        'productName': ['', common_1.Validators.required]
                     });
                 }
-                DemoFormSKUBuilder.prototype.onSubmit = function (value) {
+                DemoFormBuilder.prototype.onSubmit = function (value) {
                     console.log('you submitted value:', value);
                 };
-                DemoFormSKUBuilder = __decorate([
+                DemoFormBuilder = __decorate([
                     core_1.Component({
                         selector: 'demo-form-sku',
                         directives: [common_1.CORE_DIRECTIVES, common_1.FORM_DIRECTIVES],
-                        template: "\n    <div class=\"ui raised segment\">\n        <h2 class=\"ui header\">Demo Form: SKU with validations (shorthand)</h2>\n        <form [ngFormModel]=\"myForm\"\n            (ngSubmit)=\"onSubmit(myForm.value)\"\n            class=\"ui form\">\n\n        <div class=\"field\"\n            [class.error]=\"!myForm.find('sku').valid && myForm.find('sku').touched\">\n            <label for=\"skuInput\">SKU</label>\n            <input type=\"text\"\n                id=\"skuInput\"\n                placeholder=\"SKU\"\n                #sku=\"ngForm\"\n                [ngFormControl]=\"myForm.controls['sku']\">\n            <div *ngIf=\"!sku.control.valid\" class=\"ui error message\">SKU is invalid</div>\n            <div *ngIf=\"sku.control.hasError('required')\" class=\"ui error message\">SKU is  required</div>\n            <div *ngIf=\"sku.control.hasError('invalidSku')\" class=\"ui error message\">SKU must begin with <tt>123</tt></div>\n        </div>\n\n        <div *ngIf=\"!myForm.valid\" class=\"ui error message\">Form is invalid</div>\n\n        <button type=\"submit\" class=\"ui button\">Submit</button>\n        </form>\n    </div>\n    "
+                        template: "\n    <div class=\"ui raised segment\">\n        <h2 class=\"ui header\">Demo Form with ng-model</h2>\n        <form [ngFormModel]=\"myForm\"\n            (ngSubmit)=\"onSubmit(myForm.value)\"\n            class=\"ui form\">\n        <div class=\"ui info message\">\n            The product name is: {{productName}}\n        </div>\n        <div class=\"field\"\n            [class.error]=\"!myForm.find('productName').valid && myForm.find('productName').touched\">\n            <label for=\"productName\">Product Name</label>\n            <input type=\"text\"\n                id=\"productNameInput\"\n                placeholder=\"Product Name\"\n                [ngFormControl]=\"myForm.controls['productName']\"\n                [(ngModel)]=\"productName\">\n        </div>\n\n\n        <button type=\"submit\" class=\"ui button\">Submit</button>\n        </form>\n    </div>\n    "
                     }), 
                     __metadata('design:paramtypes', [common_1.FormBuilder])
-                ], DemoFormSKUBuilder);
-                return DemoFormSKUBuilder;
+                ], DemoFormBuilder);
+                return DemoFormBuilder;
             })();
-            exports_1("DemoFormSKUBuilder", DemoFormSKUBuilder);
-            browser_1.bootstrap(DemoFormSKUBuilder);
+            exports_1("DemoFormBuilder", DemoFormBuilder);
+            browser_1.bootstrap(DemoFormBuilder);
         }
     }
 });

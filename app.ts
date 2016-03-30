@@ -14,54 +14,37 @@ function skuValidator(control: Control): { [s: string]: boolean } {
     directives: [CORE_DIRECTIVES, FORM_DIRECTIVES],
     template: `
     <div class="ui raised segment">
-        <h2 class="ui header">Demo Form: SKU with validations (shorthand)</h2>
+        <h2 class="ui header">Demo Form with ng-model</h2>
         <form [ngFormModel]="myForm"
             (ngSubmit)="onSubmit(myForm.value)"
             class="ui form">
-
+        <div class="ui info message">
+            The product name is: {{productName}}
+        </div>
         <div class="field"
-            [class.error]="!myForm.find('sku').valid && myForm.find('sku').touched">
-            <label for="skuInput">SKU</label>
+            [class.error]="!myForm.find('productName').valid && myForm.find('productName').touched">
+            <label for="productName">Product Name</label>
             <input type="text"
-                id="skuInput"
-                placeholder="SKU"
-                #sku="ngForm"
-                [ngFormControl]="myForm.controls['sku']">
-            <div *ngIf="!sku.control.valid" class="ui error message">SKU is invalid</div>
-            <div *ngIf="sku.control.hasError('required')" class="ui error message">SKU is  required</div>
-            <div *ngIf="sku.control.hasError('invalidSku')" class="ui error message">SKU must begin with <tt>123</tt></div>
+                id="productNameInput"
+                placeholder="Product Name"
+                [ngFormControl]="myForm.controls['productName']"
+                [(ngModel)]="productName">
         </div>
 
-        <div *ngIf="!myForm.valid" class="ui error message">Form is invalid</div>
 
         <button type="submit" class="ui button">Submit</button>
         </form>
     </div>
     `
 })
-export class DemoFormSKUBuilder {
+export class DemoFormBuilder {
     myForm: ControlGroup;
-    sku: any;
+    productName: string;
 
     constructor(fb: FormBuilder) {
         this.myForm = fb.group({
-            'sku': ['', Validators.compose([
-                Validators.required, skuValidator])]
+            'productName': ['', Validators.required]
         });
-
-        this.sku = this.myForm.controls['sku'];
-
-        this.sku.valueChanges.subscribe(
-            (value: string) => {
-                console.log('sku changed to: ', value);
-            }
-        );
-
-        this.myForm.valueChanges.subscribe(
-            (form: any) => {
-                console.log('form changed to: ', form);
-            }
-        )
     }
 
     onSubmit(value: string): void {
@@ -69,4 +52,4 @@ export class DemoFormSKUBuilder {
     }
 }
 
-bootstrap(DemoFormSKUBuilder);
+bootstrap(DemoFormBuilder);
