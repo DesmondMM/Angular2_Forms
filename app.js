@@ -9,7 +9,7 @@ System.register(['angular2/core', 'angular2/common', "angular2/platform/browser"
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, common_1, browser_1;
-    var DemoFormSKU;
+    var DemoFormSKUBuilder;
     return {
         setters:[
             function (core_1_1) {
@@ -22,24 +22,27 @@ System.register(['angular2/core', 'angular2/common', "angular2/platform/browser"
                 browser_1 = browser_1_1;
             }],
         execute: function() {
-            DemoFormSKU = (function () {
-                function DemoFormSKU() {
+            DemoFormSKUBuilder = (function () {
+                function DemoFormSKUBuilder(fb) {
+                    this.myForm = fb.group({
+                        'sku': ['Desmond Munashe']
+                    });
                 }
-                DemoFormSKU.prototype.onSubmit = function (form) {
-                    console.log('you submitted value:', form);
+                DemoFormSKUBuilder.prototype.onSubmit = function (value) {
+                    console.log('you submitted value:', value);
                 };
-                DemoFormSKU = __decorate([
+                DemoFormSKUBuilder = __decorate([
                     core_1.Component({
                         selector: 'demo-form-sku',
                         directives: [common_1.FORM_DIRECTIVES],
-                        template: "\n    <div class=\"ui raised segment\">\n        <h2 class=\"ui header\">Demo Form: SKU</h2>\n        <form #f=\"ngForm\"\n            (ngSubmit)=\"onSubmit(f.value)\"\n            class=\"ui form\">\n\n        <div class=\"field\">\n            <label for=\"skuInput\">SKU</label>\n            <input type=\"text\"\n                id=\"skuInput\"\n                placeholder=\"SKU\"\n                ngControl=\"sku\">\n        </div>\n\n        <button type=\"submit\" class=\"ui button\">Submit</button>\n        </form>\n    </div>\n    "
+                        template: "\n    <div class=\"ui raised segment\">\n        <h2 class=\"ui header\">Demo Form: SKU</h2>\n        <form [ngFormModel]=\"myForm\"\n            (ngSubmit)=\"onSubmit(myForm.value)\"\n            class=\"ui form\">\n\n        <div class=\"field\">\n            <label for=\"skuInput\">SKU</label>\n            <input type=\"text\"\n                id=\"skuInput\"\n                placeholder=\"SKU\"\n                [ngFormControl]=\"myForm.controls['sku']\">\n        </div>\n\n        <button type=\"submit\" class=\"ui button\">Submit</button>\n        </form>\n    </div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [])
-                ], DemoFormSKU);
-                return DemoFormSKU;
+                    __metadata('design:paramtypes', [common_1.FormBuilder])
+                ], DemoFormSKUBuilder);
+                return DemoFormSKUBuilder;
             })();
-            exports_1("DemoFormSKU", DemoFormSKU);
-            browser_1.bootstrap(DemoFormSKU);
+            exports_1("DemoFormSKUBuilder", DemoFormSKUBuilder);
+            browser_1.bootstrap(DemoFormSKUBuilder);
         }
     }
 });
