@@ -1,6 +1,12 @@
 import {Component} from 'angular2/core';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl} from 'angular2/common';
+import {CORE_DIRECTIVES, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl, Control} from 'angular2/common';
 import { bootstrap } from "angular2/platform/browser";
+
+function skuValidator(control: Control): { [s: string]: boolean } {
+  if (!control.value.match(/^123/)) {
+    return {invalidSku: true};
+  }
+}
 
 @Component({
     selector: 'demo-form-sku',
@@ -21,7 +27,8 @@ import { bootstrap } from "angular2/platform/browser";
                 #sku="ngForm"
                 [ngFormControl]="myForm.controls['sku']">
             <div *ngIf="!sku.control.valid" class="ui error message">SKU is invalid</div>
-            <div *ngIf="sku.control.hasError('required')" class="error">SKU is  required</div>
+            <div *ngIf="sku.control.hasError('required')" class="ui error message">SKU is  required</div>
+            <div *ngIf="sku.control.hasError('invalidSku')" class="ui error message">SKU must begin with <tt>123</tt></div>
         </div>
 
         <div *ngIf="!myForm.valid" class="ui error message">Form is invalid</div>
@@ -36,7 +43,8 @@ export class DemoFormSKUBuilder {
 
     constructor(fb: FormBuilder) {
         this.myForm = fb.group({
-            'sku': ['', Validators.required]
+            'sku': ['', Validators.compose([
+                Validators.required, skuValidator])]
         });
     }
 
