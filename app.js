@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', "angular2/platform/browser", "angular2/common"], function(exports_1) {
+System.register(['angular2/core', 'angular2/common', "angular2/platform/browser"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/common', "angular2/platform/browser"
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, browser_1, common_2;
+    var core_1, common_1, browser_1;
     var DemoFormSKUBuilder;
     return {
         setters:[
@@ -20,16 +20,14 @@ System.register(['angular2/core', 'angular2/common', "angular2/platform/browser"
             },
             function (browser_1_1) {
                 browser_1 = browser_1_1;
-            },
-            function (common_2_1) {
-                common_2 = common_2_1;
             }],
         execute: function() {
             DemoFormSKUBuilder = (function () {
                 function DemoFormSKUBuilder(fb) {
                     this.myForm = fb.group({
-                        'sku': ['Desmond Munashe', common_2.Validators.required]
+                        'sku': ['', common_1.Validators.required]
                     });
+                    this.sku = this.myForm.controls['sku'];
                 }
                 DemoFormSKUBuilder.prototype.onSubmit = function (value) {
                     console.log('you submitted value:', value);
@@ -38,7 +36,7 @@ System.register(['angular2/core', 'angular2/common', "angular2/platform/browser"
                     core_1.Component({
                         selector: 'demo-form-sku',
                         directives: [common_1.FORM_DIRECTIVES],
-                        template: "\n    <div class=\"ui raised segment\">\n        <h2 class=\"ui header\">Demo Form: SKU</h2>\n        <form [ngFormModel]=\"myForm\"\n            (ngSubmit)=\"onSubmit(myForm.value)\"\n            class=\"ui form\">\n\n        <div class=\"field\">\n            <label for=\"skuInput\">SKU</label>\n            <input type=\"text\"\n                id=\"skuInput\"\n                placeholder=\"SKU\"\n                [ngFormControl]=\"myForm.controls['sku']\">\n        </div>\n\n        <button type=\"submit\" class=\"ui button\">Submit</button>\n        </form>\n    </div>\n    "
+                        template: "\n    <div class=\"ui raised segment\">\n        <h2 class=\"ui header\">Demo Form: SKU with validations (explicit)</h2>\n        <form [ngFormModel]=\"myForm\"\n            (ngSubmit)=\"onSubmit(myForm.value)\"\n            class=\"ui form\">\n\n        <div class=\"field\"\n            [class.error]=\"!sku.valid && sku.touched\">\n            <label for=\"skuInput\">SKU</label>\n            <input type=\"text\"\n                id=\"skuInput\"\n                placeholder=\"SKU\"\n                [ngFormControl]=\"sku\">\n            <div *ngIf=\"!sku.valid\" class=\"ui error message\">SKU is invalid</div>\n            <div *ngIf=\"sku.hasError('required')\" class=\"error\">SKU is  required</div>\n        </div>\n\n        <div *ngIf=\"!myForm.valid\" class=\"ui error message\">Form is invalid</div>\n\n        <button type=\"submit\" class=\"ui button\">Submit</button>\n        </form>\n    </div>\n    "
                     }), 
                     __metadata('design:paramtypes', [common_1.FormBuilder])
                 ], DemoFormSKUBuilder);
