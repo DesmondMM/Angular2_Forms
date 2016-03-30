@@ -1,6 +1,7 @@
 import {Component} from 'angular2/core';
 import {FORM_DIRECTIVES, FormBuilder, ControlGroup} from 'angular2/common';
 import { bootstrap } from "angular2/platform/browser";
+import {Validators} from "angular2/common";
 
 @Component({
     selector: 'demo-form-sku',
@@ -30,7 +31,7 @@ export class DemoFormSKUBuilder {
 
     constructor(fb: FormBuilder) {
         this.myForm = fb.group({
-            'sku': ['Desmond Munashe']
+            'sku': ['Desmond Munashe', Validators.required]
         });
     }
 
