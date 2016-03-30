@@ -1,6 +1,7 @@
 import {Component} from 'angular2/core';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl, Control} from 'angular2/common';
 import { bootstrap } from "angular2/platform/browser";
+import any = jasmine.any;
 
 function skuValidator(control: Control): { [s: string]: boolean } {
   if (!control.value.match(/^123/)) {
@@ -40,12 +41,27 @@ function skuValidator(control: Control): { [s: string]: boolean } {
 })
 export class DemoFormSKUBuilder {
     myForm: ControlGroup;
+    sku: any;
 
     constructor(fb: FormBuilder) {
         this.myForm = fb.group({
             'sku': ['', Validators.compose([
                 Validators.required, skuValidator])]
         });
+
+        this.sku = this.myForm.controls['sku'];
+
+        this.sku.valueChanges.subscribe(
+            (value: string) => {
+                console.log('sku changed to: ', value);
+            }
+        );
+
+        this.myForm.valueChanges.subscribe(
+            (form: any) => {
+                console.log('form changed to: ', form);
+            }
+        )
     }
 
     onSubmit(value: string): void {

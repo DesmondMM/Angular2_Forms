@@ -33,6 +33,13 @@ System.register(['angular2/core', 'angular2/common', "angular2/platform/browser"
                         'sku': ['', common_1.Validators.compose([
                                 common_1.Validators.required, skuValidator])]
                     });
+                    this.sku = this.myForm.controls['sku'];
+                    this.sku.valueChanges.subscribe(function (value) {
+                        console.log('sku changed to: ', value);
+                    });
+                    this.myForm.valueChanges.subscribe(function (form) {
+                        console.log('form changed to: ', form);
+                    });
                 }
                 DemoFormSKUBuilder.prototype.onSubmit = function (value) {
                     console.log('you submitted value:', value);
