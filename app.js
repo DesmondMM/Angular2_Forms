@@ -27,7 +27,6 @@ System.register(['angular2/core', 'angular2/common', "angular2/platform/browser"
                     this.myForm = fb.group({
                         'sku': ['', common_1.Validators.required]
                     });
-                    this.sku = this.myForm.controls['sku'];
                 }
                 DemoFormSKUBuilder.prototype.onSubmit = function (value) {
                     console.log('you submitted value:', value);
@@ -35,8 +34,8 @@ System.register(['angular2/core', 'angular2/common', "angular2/platform/browser"
                 DemoFormSKUBuilder = __decorate([
                     core_1.Component({
                         selector: 'demo-form-sku',
-                        directives: [common_1.FORM_DIRECTIVES],
-                        template: "\n    <div class=\"ui raised segment\">\n        <h2 class=\"ui header\">Demo Form: SKU with validations (explicit)</h2>\n        <form [ngFormModel]=\"myForm\"\n            (ngSubmit)=\"onSubmit(myForm.value)\"\n            class=\"ui form\">\n\n        <div class=\"field\"\n            [class.error]=\"!sku.valid && sku.touched\">\n            <label for=\"skuInput\">SKU</label>\n            <input type=\"text\"\n                id=\"skuInput\"\n                placeholder=\"SKU\"\n                [ngFormControl]=\"sku\">\n            <div *ngIf=\"!sku.valid\" class=\"ui error message\">SKU is invalid</div>\n            <div *ngIf=\"sku.hasError('required')\" class=\"error\">SKU is  required</div>\n        </div>\n\n        <div *ngIf=\"!myForm.valid\" class=\"ui error message\">Form is invalid</div>\n\n        <button type=\"submit\" class=\"ui button\">Submit</button>\n        </form>\n    </div>\n    "
+                        directives: [common_1.CORE_DIRECTIVES, common_1.FORM_DIRECTIVES],
+                        template: "\n    <div class=\"ui raised segment\">\n        <h2 class=\"ui header\">Demo Form: SKU with validations (shorthand)</h2>\n        <form [ngFormModel]=\"myForm\"\n            (ngSubmit)=\"onSubmit(myForm.value)\"\n            class=\"ui form\">\n\n        <div class=\"field\"\n            [class.error]=\"!myForm.find('sku').valid && myForm.find('sku').touched\">\n            <label for=\"skuInput\">SKU</label>\n            <input type=\"text\"\n                id=\"skuInput\"\n                placeholder=\"SKU\"\n                #sku=\"ngForm\"\n                [ngFormControl]=\"myForm.controls['sku']\">\n            <div *ngIf=\"!sku.control.valid\" class=\"ui error message\">SKU is invalid</div>\n            <div *ngIf=\"sku.control.hasError('required')\" class=\"error\">SKU is  required</div>\n        </div>\n\n        <div *ngIf=\"!myForm.valid\" class=\"ui error message\">Form is invalid</div>\n\n        <button type=\"submit\" class=\"ui button\">Submit</button>\n        </form>\n    </div>\n    "
                     }), 
                     __metadata('design:paramtypes', [common_1.FormBuilder])
                 ], DemoFormSKUBuilder);
